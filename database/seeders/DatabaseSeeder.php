@@ -19,5 +19,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Poblar con datos de inventario de ejemplo
+        $this->call([
+            InventorySeeder::class,
+        ]);
     }
 }
