@@ -6,9 +6,9 @@ Plataforma full-stack de **gestión de inventario y stock**. Proyecto del ciclo 
 
 | Repositorio | Rol | Stack |
 |-------------|-----|-------|
-| [**focustrack**](https://github.com/focustrack/focustrack) | Índice y arquitectura | — |
-| [**focustrack-api**](https://github.com/focustrack/focustrack-api) | Backend REST | Laravel 11, PHP, Sanctum |
-| [**focustrack-ios**](https://github.com/focustrack/focustrack-ios) | App iOS | Swift, SwiftUI, MVVM |
+| [**focustrack**](https://github.com/yagoalonsodev/focustrack) | Índice y arquitectura | — |
+| [**focustrack-api**](https://github.com/yagoalonsodev/focustrack-api) | Backend REST | Laravel 11, PHP, Sanctum |
+| [**focustrack-ios**](https://github.com/yagoalonsodev/focustrack-ios) | App iOS | Swift, SwiftUI, MVVM |
 
 > **Este repositorio:** API REST en Laravel 11 — autenticación Sanctum y modelos de inventario (productos, categorías, plataformas, cuentas).
 
