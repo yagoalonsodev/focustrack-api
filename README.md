@@ -1,14 +1,14 @@
 # FocusTrack — Backend API
 
-## Ecosistema FocusTrack (c0k0mesta)
+## Ecosistema FocusTrack
 
-Plataforma full-stack de **gestión de inventario y stock**. Proyecto del ciclo **DAM** (La Salle Gràcia).
+Plataforma full-stack de **gestión de inventario y stock**. Proyecto del ciclo **DAM** (La Salle Gràcia), desarrollado en equipo.
 
 | Repositorio | Rol | Stack |
 |-------------|-----|-------|
-| [**c0k0mesta**](https://github.com/yagoalonsodev/c0k0mesta) | Índice y arquitectura | — |
-| [**c0k0mesta-api**](https://github.com/yagoalonsodev/c0k0mesta-api) | Backend REST | Laravel 11, PHP, Sanctum |
-| [**c0k0mesta-ios**](https://github.com/yagoalonsodev/c0k0mesta-ios) | App iOS | Swift, SwiftUI, MVVM |
+| [**focustrack**](https://github.com/focustrack/focustrack) | Índice y arquitectura | — |
+| [**focustrack-api**](https://github.com/focustrack/focustrack-api) | Backend REST | Laravel 11, PHP, Sanctum |
+| [**focustrack-ios**](https://github.com/focustrack/focustrack-ios) | App iOS | Swift, SwiftUI, MVVM |
 
 > **Este repositorio:** API REST en Laravel 11 — autenticación Sanctum y modelos de inventario (productos, categorías, plataformas, cuentas).
 
