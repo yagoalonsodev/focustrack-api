@@ -24,6 +24,16 @@ class RegisterController extends Controller
         // La validación ya se realiza en RegisterRequest
 
         try {
+            // Verificar si el email ya está registrado (doble verificación)
+            if (User::where('email', $request->email)->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'El correo electrónico ya está registrado',
+                    'error_code' => 'EMAIL_ALREADY_EXISTS',
+                    'field' => 'email'
+                ], 409);
+            }
+
             // Iniciar transacción de base de datos
             DB::beginTransaction();
 
@@ -43,14 +53,28 @@ class RegisterController extends Controller
                 'password' => $hashedPassword,
             ]);
 
+            // Verificar que el usuario se creó correctamente
+            if (!$user) {
+                throw new \Exception('No se pudo crear el usuario en la base de datos');
+            }
+
             // Guardar el salt en la tabla password_salts
-            PasswordSalt::create([
+            $passwordSalt = PasswordSalt::create([
                 'user_id' => $user->id,
                 'salt' => $salt,
             ]);
 
+            // Verificar que el salt se guardó correctamente
+            if (!$passwordSalt) {
+                throw new \Exception('No se pudo guardar el salt de seguridad');
+            }
+
             // Crear el token de autenticación con Sanctum
             $token = $user->createToken('auth_token')->plainTextToken;
+
+            if (!$token) {
+                throw new \Exception('No se pudo generar el token de autenticación');
+            }
 
             // Confirmar la transacción
             DB::commit();
@@ -72,15 +96,30 @@ class RegisterController extends Controller
                 ]
             ], 201);
 
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Error específico de base de datos
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de base de datos al registrar el usuario',
+                'error_code' => 'DATABASE_ERROR',
+                'error' => $e->getMessage(),
+                'sql_code' => $e->getCode()
+            ], 500);
+
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
 
-            // Retornar error
+            // Retornar error genérico con más detalles
             return response()->json([
                 'success' => false,
                 'message' => 'Error al registrar el usuario',
-                'error' => $e->getMessage()
+                'error_code' => 'REGISTRATION_ERROR',
+                'error' => $e->getMessage(),
+                'trace' => config('app.debug') ? $e->getTraceAsString() : null
             ], 500);
         }
     }

@@ -58,11 +58,21 @@ class RegisterRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator): void
     {
+        $errors = $validator->errors();
+        
+        // Crear un mensaje detallado con todos los errores
+        $errorMessages = [];
+        foreach ($errors->all() as $message) {
+            $errorMessages[] = $message;
+        }
+        
         throw new HttpResponseException(
             response()->json([
                 'success' => false,
-                'message' => 'Error de validación',
-                'errors' => $validator->errors()
+                'message' => 'Error de validación: ' . implode(', ', $errorMessages),
+                'errors' => $errors->toArray(),
+                'fields_with_errors' => array_keys($errors->toArray()),
+                'total_errors' => count($errorMessages)
             ], 422)
         );
     }
